@@ -1,0 +1,81 @@
+claim_set: C-SLR-CURRENT-STATE
+updated_at: "2026-09-18"
+
+claims:
+  - claim_id: C-T2-LEARNABILITY
+    claim: "T²MLR 的 recurrent path 在公开 checkpoint 中被实际使用，不是 dead branch。"
+    evidence:
+      - "六 checkpoint × 两领域的 carry_off ΔNLL 95% CI 全部为正。"
+      - "持续 zero_every 会造成明显预测损失。"
+    strength: strong_within_frozen_checkpoint_scope
+    caveat: "冻结权重依赖不等于相对 vanilla Transformer 的 architecture advantage。"
+    sources:
+      - 06_reports/t2mlr_six_checkpoint_results.md
+      - 06_reports/t2mlr_expanded_results.md
+
+  - claim_id: C-T2-LOCAL-SHORTCUT
+    claim: "当前 T²MLR checkpoint 更符合局部 deep-to-shallow temporal feature shortcut / 可重建状态，而非已建立的 long-horizon reasoning state。"
+    evidence:
+      - "zero-reset state t50 中位数均为 1 token。"
+      - "natural t10 约 5–20，clean-KV 约 2–3；FP32 small-perturbation natural t10 约 4–9。"
+      - "大多数 lag 32–127 signed ΔNLL 很小；clean-KV 进一步缩短 persistence。"
+    strength: moderate_mechanistic_intervention
+    caveat: "不能排除少数持久方向；one-step 指 recurrent edge 的功能形态，不表示所有 effect 只存在 1 token。"
+    sources:
+      - 06_reports/t2mlr_impulse_results.md
+      - 06_reports/t2mlr_six_checkpoint_results.md
+
+  - claim_id: C-T2-LONG-HORIZON-NOT-ESTABLISHED
+    claim: "现有实验未建立 T²MLR gain 来自 long-horizon latent reasoning。"
+    evidence:
+      - "没有语义正确/错误中间状态替换。"
+      - "teacher forcing + full attention history 允许重建。"
+      - "Jacobi-trained checkpoints 的 state perturbation 多数快速恢复。"
+    strength: strong_as_non_establishment
+    caveat: "这不是证明 long-horizon mechanism 不存在。"
+    sources:
+      - 06_reports/t2mlr_impulse_results.md
+      - 04_evidence/t2mlr_expanded_claims.yaml
+
+  - claim_id: C-T2-NOT-COMPUTE-EFFICIENT
+    claim: "T²MLR 的 Jacobi approximation 改善并行训练可行性，但没有达到 vanilla Transformer 的 training-compute efficiency。"
+    evidence:
+      - "论文 135M 配方报告 T²MLR 约 2.24× baseline wall-clock；matched wall-clock Transformer zero-shot average 45.30，高于 T²MLR 44.14。"
+      - "repo 算子账本显示 Jacobi(16,4) 的训练 FLOPs 量级仍为标准 LM 数倍。"
+    strength: moderate_to_strong
+    caveat: "repo FLOPs 账本是估算；2.24× 是论文特定实现/规模的 measured result。"
+    sources:
+      - 06_reports/t2mlr_jacobi_training_cost.md
+      - https://arxiv.org/abs/2607.15178
+
+  - claim_id: C-RLT-SMALL-SCALE-NO-ADVANTAGE
+    claim: "Empero 的 50–140M / 500M-token controlled evaluation 未观察到 RLT recurrence 的质量优势。"
+    evidence:
+      - "~50M 基本持平；~140M RLT 差于 RLT-A0 与 parameter-matched Transformer。"
+      - "position-wise feedback effect 没有随 document position 增强。"
+    strength: strong_within_tested_regime
+    caveat: "不能外推到充分训练的大模型。"
+    sources:
+      - https://www.alphaxiv.org/abs/2609.recurrence-looped-transformer-evaluation
+      - https://github.com/empero-org/rlt-evaluation
+
+  - claim_id: C-RLT-BPTT-COMPUTE-BOTTLENECK
+    claim: "RLT 的 exact sequence recurrence + BPTT 训练效率过低，构成 scale-up 的首要障碍。"
+    evidence:
+      - "Empero main-scale ~8.4K tokens/s/device vs Transformer ~124K。"
+      - "500M tokens ~22 GPU-hours vs Transformer ~1.14 GPU-hours。"
+    strength: strong_within_reported_implementation
+    caveat: "未来新的 exact/approximate parallel training method 可能改变结论。"
+    sources:
+      - https://www.alphaxiv.org/abs/2609.recurrence-looped-transformer-evaluation
+
+  - claim_id: C-SLR-COMPUTE-GATE
+    claim: "对 sequence-axis latent recurrence，compute efficiency 是验证 Expressivity / Learnability / Usefulness 的前置 gate。"
+    evidence:
+      - "RLT 保持 exact semantics 但难以 scale；T²MLR 用 Jacobi 提高可训练性仍显著慢于 vanilla parallel training。"
+      - "当前计划中的 BPTT/Jacobi causal grid 预计 information gain per GPU-hour 过低，因此停止。"
+    strength: project_decision_supported_by_current_evidence
+    caveat: "这是研究优先级判断，不是数学不可能性结论。"
+    sources:
+      - 06_reports/t2mlr_jacobi_training_cost.md
+      - 06_reports/current_state.md
