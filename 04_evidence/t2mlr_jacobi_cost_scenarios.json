@@ -1,0 +1,231 @@
+{
+  "status": "planning_scenarios_not_H100_benchmarks",
+  "reference_nonembedding_params": 60000000,
+  "effective_matmul_params": 85000000.0,
+  "recurrent_compute_fraction": 0.35294117647058826,
+  "context": 128,
+  "assumed_tokens_per_second": {
+    "A": [
+      15000,
+      60000
+    ],
+    "B": [
+      8000,
+      30000
+    ],
+    "C": [
+      5000,
+      20000
+    ],
+    "D": [
+      2000,
+      10000
+    ],
+    "E": [
+      1000,
+      6000
+    ],
+    "F": [
+      50000,
+      200000
+    ]
+  },
+  "scenarios": {
+    "core_20000000": {
+      "arms": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ],
+      "seeds": 3,
+      "tokens_per_arm_per_seed": 20000000,
+      "total_training_tokens": 240000000,
+      "training_gpu_hours": [
+        5.277777777777778,
+        28.194444444444443
+      ],
+      "with_30_percent_running_overhead": [
+        6.861111111111112,
+        36.65277777777778
+      ]
+    },
+    "core_100000000": {
+      "arms": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ],
+      "seeds": 3,
+      "tokens_per_arm_per_seed": 100000000,
+      "total_training_tokens": 1200000000,
+      "training_gpu_hours": [
+        26.388888888888886,
+        140.97222222222223
+      ],
+      "with_30_percent_running_overhead": [
+        34.30555555555555,
+        183.2638888888889
+      ]
+    },
+    "core_500000000": {
+      "arms": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ],
+      "seeds": 3,
+      "tokens_per_arm_per_seed": 500000000,
+      "total_training_tokens": 6000000000,
+      "training_gpu_hours": [
+        131.94444444444446,
+        704.8611111111111
+      ],
+      "with_30_percent_running_overhead": [
+        171.5277777777778,
+        916.3194444444445
+      ]
+    },
+    "core_1000000000": {
+      "arms": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ],
+      "seeds": 3,
+      "tokens_per_arm_per_seed": 1000000000,
+      "total_training_tokens": 12000000000,
+      "training_gpu_hours": [
+        263.8888888888889,
+        1409.7222222222222
+      ],
+      "with_30_percent_running_overhead": [
+        343.0555555555556,
+        1832.638888888889
+      ]
+    },
+    "full_20000000": {
+      "arms": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "seeds": 3,
+      "tokens_per_arm_per_seed": 20000000,
+      "total_training_tokens": 360000000,
+      "training_gpu_hours": [
+        6.194444444444445,
+        31.86111111111111
+      ],
+      "with_30_percent_running_overhead": [
+        8.052777777777779,
+        41.419444444444444
+      ]
+    },
+    "full_100000000": {
+      "arms": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "seeds": 3,
+      "tokens_per_arm_per_seed": 100000000,
+      "total_training_tokens": 1800000000,
+      "training_gpu_hours": [
+        30.97222222222222,
+        159.30555555555557
+      ],
+      "with_30_percent_running_overhead": [
+        40.263888888888886,
+        207.09722222222226
+      ]
+    },
+    "full_500000000": {
+      "arms": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "seeds": 3,
+      "tokens_per_arm_per_seed": 500000000,
+      "total_training_tokens": 9000000000,
+      "training_gpu_hours": [
+        154.8611111111111,
+        796.5277777777777
+      ],
+      "with_30_percent_running_overhead": [
+        201.31944444444443,
+        1035.486111111111
+      ]
+    },
+    "full_1000000000": {
+      "arms": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "seeds": 3,
+      "tokens_per_arm_per_seed": 1000000000,
+      "total_training_tokens": 18000000000,
+      "training_gpu_hours": [
+        309.7222222222222,
+        1593.0555555555554
+      ],
+      "with_30_percent_running_overhead": [
+        402.63888888888886,
+        2070.972222222222
+      ]
+    },
+    "pilot_2000000": {
+      "arms": [
+        "A",
+        "B",
+        "D",
+        "E"
+      ],
+      "seeds": 1,
+      "tokens_per_arm_per_seed": 2000000,
+      "total_training_tokens": 8000000,
+      "training_gpu_hours": [
+        0.17592592592592593,
+        0.9398148148148149
+      ],
+      "with_30_percent_running_overhead": [
+        0.22870370370370371,
+        1.2217592592592594
+      ]
+    }
+  },
+  "approximate_flops": {
+    "A": {
+      "standard_training_multiplier": 4.0392156862745106,
+      "per_token": 2060000000.0000005,
+      "ideal_989tflops_hours_per_100m_tokens": 0.05785866756544209
+    },
+    "B": {
+      "standard_training_multiplier": 6.862745098039216,
+      "per_token": 3500000000.0000005,
+      "ideal_989tflops_hours_per_100m_tokens": 0.09830356139759579
+    },
+    "C": {
+      "standard_training_multiplier": 8.745098039215687,
+      "per_token": 4460000000.0,
+      "ideal_989tflops_hours_per_100m_tokens": 0.1252668239523649
+    }
+  }
+}

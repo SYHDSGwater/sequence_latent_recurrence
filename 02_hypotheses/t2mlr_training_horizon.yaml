@@ -62,3 +62,7 @@ belief:
 notes: >-
   不把“Jacobi forward approximation”与“short recurrent credit horizon”混为一谈；
   两者必须通过 matched contrasts 分开识别。
+  六 checkpoint NLL 矩阵已完成（C-T2-SIX），但 state/KL AUC 与 half-life 尚未测齐。
+  362M/50B 数学自然 reset 远期未通过 ±0.01 小效应判据，clean-KV 仍很小；
+  不能把共有 (16,4) 配置直接解释为所有 checkpoint 的共同恢复尺度。
+  训练尚未执行，当前不据此提升该因果假说的置信度。

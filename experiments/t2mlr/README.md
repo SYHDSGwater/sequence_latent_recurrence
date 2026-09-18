@@ -1,5 +1,20 @@
 # T²MLR recurrent 机制实验
 
+## 六 checkpoint 矩阵与 Jacobi 训练估算
+
+补齐的四个模型由 `matrix_prepare.py` 按 `01_literature/t2mlr_six_checkpoint_audit.json` 的固定 revision/LFS SHA256 下载，并与原 tokenizer 后端严格比对。`remote_matrix.sh` 复用冻结样本执行新增八个 cell，`remote_matrix_prefetch.sh` 可在推理期间预取后续权重（同模型文件锁防止重复写入）。原始结果归档为 `artifacts/matrix-results.tar.gz`。
+
+解包扩展结果与矩阵结果后运行：
+
+```sh
+python experiments/t2mlr/matrix_analyze.py
+python experiments/t2mlr/matrix_report.py
+python experiments/t2mlr/matrix_plot.py
+python experiments/t2mlr/estimate_training_cost.py
+```
+
+矩阵只补齐同配方 NLL 测量，E-T2-002 的 small-perturbation、state/KL AUC、恢复半衰期仍须单独测量。训练估算见 `06_reports/t2mlr_jacobi_training_cost.md`：吞吐是未实测的预算情景，不是 H100 benchmark；本轮没有执行训练。
+
 ## 扩大实验：两个 checkpoint × 两类数据
 
 2026-09-18 的扩展采用固定的 256 篇 WikiText 文章和 256 道 MATH-500 题目，对 135M/10B 与 982M/50B 做同样的五条件配对测量。预注册及批量吞吐修订见 `03_experiments/t2mlr_expanded_preregistration.md`。MATH 测参考解答的预测损失，不是独立解题准确率；完整远期窗口实际有 169 题。

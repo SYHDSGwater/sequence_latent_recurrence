@@ -1,6 +1,8 @@
 # Archived T²MLR results
 
-These four tracked archives contain the original results for the initial study and its expansion. Check SHA256 and sizes against `04_evidence/t2mlr_raw_archives.json` before extraction. Model weights and runtime environments are not included.
+The initial four tracked archives contain the original results for the initial study and its expansion. Check SHA256 and sizes against `04_evidence/t2mlr_raw_archives.json` before extraction. Model weights and runtime environments are not included.
+
+The additional `matrix-results.tar.gz` contains the four remaining public checkpoint evaluations. It uses the same frozen input selection. Extract it to `artifacts/matrix`, alongside the existing `artifacts/expanded` extraction, then run `python experiments/t2mlr/matrix_analyze.py` from the repository root to recompute all six checkpoints and within-scale 50B-minus-10B paired differences.
 
 From the repository root:
 

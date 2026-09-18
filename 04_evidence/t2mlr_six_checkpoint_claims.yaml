@@ -1,0 +1,25 @@
+claim_id: C-T2-SIX
+status: nll_matrix_complete_primary_impulse_metrics_pending
+scope: 六个冻结公开 checkpoint，各 256 WikiText 文档和 256 MATH-500 参考解答；数学远期 n=169；完整 KV、teacher forcing、BF16 exact inference。
+claims:
+  - claim: 旧状态累积提供小幅平均预测收益。
+    evidence: 12 个模型-领域组合的 carry_off CI 均大于零。
+    caveat: 不证明持续推理；不是对所有单个样本都有收益。
+  - claim: 单次清零的远期平均代价通常小，但不能无例外推广。
+    evidence: 24 个自然/clean-KV 条件中 23 个通过 ±0.01 判据；362M/50B 数学自然 reset 为 0.01014 [0.00571,0.01459]，未通过。
+    caveat: 例外的 CI 跨过 0.01，因此不能确认效应大于该阈值。
+  - claim: 362M/50B 数学例外与受扰历史 KV 的传播相容。
+    evidence: clean-KV 远期为 -0.000656 [-0.001217,-0.000127]；事后自然减 clean-KV 配对差为 0.01080 [0.00643,0.01523]。
+    caveat: 路径非线性交互，不解释为可加贡献百分比；需独立确认。
+  - claim: 累积效用没有统一的训练 token 单调趋势。
+    evidence: 135M/Wiki 随 10B 到 50B 下降，135M/Math 不明确，362M/982M 两领域均上升。
+    caveat: 尚未确认同 seed 连续训练轨迹，不能作训练预算因果归因。
+pending:
+  - norm-controlled small perturbations with multiple fixed directions
+  - state and output impulse-response AUC
+  - recovery half-life
+  - controlled Jacobi versus exact and short versus long credit training
+sources:
+  - 04_evidence/t2mlr_six_checkpoint_results.json
+  - 04_evidence/t2mlr_362m50b_math_exception.json
+  - 06_reports/t2mlr_six_checkpoint_results.md

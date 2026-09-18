@@ -140,6 +140,17 @@ decision_rules:
 cost:
   estimated_gpu_hours: null
   actual_gpu_hours: null
+  estimate_report: 06_reports/t2mlr_jacobi_training_cost.md
+  estimate_scenarios: 04_evidence/t2mlr_jacobi_cost_scenarios.json
+  estimate_status: planning_scenarios_not_measured_training_throughput
+  pilot_allocation_h100_hours: [2, 5]
+  core_4_arms_3_seeds_20m_tokens_per_run_h100_hours: [7, 37]
+  core_4_arms_3_seeds_100m_tokens_per_run_h100_hours: [34, 183]
+  estimate_caveat: >-
+    Ranges assume a roughly 60M non-embedding backbone, context 128 and unmeasured
+    arm-specific throughput scenarios; include 30% ordinary running overhead.
+    They are not confidence intervals or validated H100 benchmarks. No training run
+    has been launched. Measure throughput and gradient semantics before expanding.
   budget_policy: >-
     Phase A 优先复用 inference pipeline；Phase B 使用 stage gate，
     先 30M-100M + context 128 做因果识别，再决定是否扩展。
@@ -153,9 +164,19 @@ failure_modes:
   - "更长 persistence 不自动等于 useful reasoning"
 
 result:
-  raw_artifacts: []
-  summary: null
-  anomaly_detected: false
+  phase_A_nll_matrix_status: complete_six_checkpoints_two_domains
+  phase_A_primary_impulse_metrics_status: pending
+  phase_B_training_status: not_started
+  phase_A_nll_report: 06_reports/t2mlr_six_checkpoint_results.md
+  phase_A_nll_exception: 362M_50B_math_natural_reset_far_window_not_within_practical_interval
+  raw_artifacts:
+    - artifacts/expanded-results.tar.gz
+    - artifacts/matrix-results.tar.gz
+  summary: >-
+    Phase-A comparable NLL component complete. All twelve carry_off CIs are positive;
+    362M/50B math natural-reset far-window CI fails the predefined small-effect criterion,
+    while clean-KV remains small. Primary impulse metrics and causal training remain pending.
+  anomaly_detected: true
 
 interpretation:
   supported_hypotheses: []

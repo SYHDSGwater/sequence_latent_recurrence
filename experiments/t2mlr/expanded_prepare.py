@@ -7,6 +7,12 @@ from transformers import AutoTokenizer
 from adapter import MODEL, REVISION
 
 MODELS = {'982m': (MODEL, REVISION), '135m': ('JupiterZhu/T2MLR_135M_lstart13_lend18_10B_FineWebEdu', '2bbdb5540e56aaf09b2a5e80e63fcf57d629d3db')}
+MODELS.update({
+    '135m_50b': ('JupiterZhu/T2MLR_135M_lstart13_lend18_50B_FineWebEdu', 'f5b080f0863401db154c95bb0b501e3672c1b809'),
+    '362m_10b': ('JupiterZhu/T2MLR_362M_lstart9_lend24_10B_FineWebEdu', 'd242ec48f1fead7a544f108306271ff5d6fa1cf8'),
+    '362m_50b': ('JupiterZhu/T2MLR_362M_lstart9_lend24_50B_FineWebEdu', '9ededee4e5fb7b7c259d294991dd3e963c8809d6'),
+    '982m_10b': ('JupiterZhu/T2MLR_982M_lstart9_lend24_10B_FineWebEdu', '01cdc291e5f7b19379af94c5dc96fefa7c32bdf0'),
+})
 WIKI_REV = 'b08601e04326c79dfdd32d625aee71d232d685c3'
 MATH_REV = '6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be'
 
@@ -14,7 +20,8 @@ def main():
     import pyarrow.parquet as pq
     out = Path('data/expanded'); out.mkdir(parents=True, exist_ok=True)
     tokenizers = []
-    for name, (repo, rev) in MODELS.items():
+    for name in ['982m','135m']:
+        repo, rev = MODELS[name]
         path = snapshot_download(repo, revision=rev, allow_patterns=['*.json', '*.txt'])
         tokenizers.append(AutoTokenizer.from_pretrained(path))
     tok = tokenizers[0]

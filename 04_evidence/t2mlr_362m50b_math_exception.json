@@ -1,0 +1,58 @@
+{
+  "status": "exploratory_after_observing_exception",
+  "n": 169,
+  "quantiles": [
+    -0.0765906348824501,
+    -0.011718923784792423,
+    -0.0020787164103239775,
+    0.00689585879445076,
+    0.014278865419328213,
+    0.036888411641121055,
+    0.13916684687137604
+  ],
+  "fraction_positive": 0.7041420118343196,
+  "mean_excluding_largest_1": 0.00937257486380293,
+  "mean_excluding_largest_5": 0.00695964885859966,
+  "natural_minus_clean_mean": 0.010796651675500793,
+  "natural_minus_clean_ci95": [
+    0.006432997971697234,
+    0.015226713413292965
+  ],
+  "top5": [
+    {
+      "id": "test/number_theory/459.json",
+      "subject": "Number Theory",
+      "level": 3,
+      "natural": 0.13916684687137604,
+      "clean": 0.0012140922481194139
+    },
+    {
+      "id": "test/precalculus/881.json",
+      "subject": "Precalculus",
+      "level": 4,
+      "natural": 0.12552206218242645,
+      "clean": -0.0001190589609905146
+    },
+    {
+      "id": "test/algebra/1837.json",
+      "subject": "Algebra",
+      "level": 5,
+      "natural": 0.11794217675924301,
+      "clean": -0.00643243407830596
+    },
+    {
+      "id": "test/precalculus/659.json",
+      "subject": "Precalculus",
+      "level": 4,
+      "natural": 0.09491922706365585,
+      "clean": 0.0038276035338640213
+    },
+    {
+      "id": "test/intermediate_algebra/894.json",
+      "subject": "Intermediate Algebra",
+      "level": 3,
+      "natural": 0.09482669830322266,
+      "clean": 0.0006167972460389137
+    }
+  ]
+}
