@@ -23,5 +23,15 @@
     "bytes": 17518839,
     "sha256": "4edd571d27cae62183165abf60cf2e553d5794171bea9ee7d015723da258a92b",
     "files": 100
+  },
+  "impulse-results.tar.gz": {
+    "bytes": 36808926,
+    "sha256": "51a6dd5137f369faf8b214ff7583b12fcd7141a5017cbeaf090e6231f3d8b6ad",
+    "files": 207
+  },
+  "impulse-precision-results.tar.gz": {
+    "bytes": 4703656,
+    "sha256": "9d2abe746d6f97ae496298e47fe7730822e14520dee9041ac93494873ea69f42",
+    "files": 120
   }
 }

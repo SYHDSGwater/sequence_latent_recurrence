@@ -1,0 +1,43 @@
+claim_id: C-T2-IMPULSE
+status: complete_no_training
+scope: >-
+  六个冻结公开 checkpoint，主测量每领域 256 个固定输入、BF16、batch 32。
+  Wiki AUC/recovery n=256/256；MATH n=230/169。数学使用参考解答 teacher forcing。
+  两个固定随机方向的 5% 保范数小扰动在文档内平均，不作为独立样本。
+claims:
+  - claim: 零重置存在快速初始衰减，但后续恢复并非所有模型相同。
+    evidence: 所有组合 state t50 中位数为 1；自然 t10 为 5-20，clean-KV 为 2-3。
+    caveat: 连续五步阈值跨越不是指数常数，也不保证后续永久消失。
+  - claim: 362M/50B 数学的大幅重置例外在同数据的新测量中保留。
+    evidence: >-
+      自然/clean state AUC 为 2.8461/0.6131，KL AUC 为 2.3205/0.1008；
+      自然远期 signed Delta NLL 为 0.00986 [0.00538,0.01440]，clean 为
+      -0.00010 [-0.00069,0.00053]。小扰动自然远期为 -0.00032 [-0.00100,0.00033]。
+    caveat: >-
+      自然远期仍未通过 ±0.01 小效应判据；不能确认大于 0.01。不是独立数据复现，
+      不能把自然减 clean 解释为可加的 KV 贡献，也不能从零重置推广到局部扰动。
+  - claim: 增加训练 tokens 没有统一的零重置状态响应趋势。
+    evidence: >-
+      50B-10B 自然 state AUC：135M 与 982M 两领域均下降；362M 文本差区间跨零，
+      数学上升 0.94925 [0.68462,1.23503]。
+    caveat: 点态区间未校正多重比较；checkpoint 不是受控训练实验。
+  - claim: BF16 小扰动残留必须结合执行精度解释。
+    evidence: >-
+      主实验 12 个组合的小扰动自然路径 state t10 达标数均为零；固定子集同 batch
+      精度对照中，FP32 自然 state AUC 比 BF16 小 8.8-17.4 倍，自然 t10 中位数
+      为 4-9 步，clean 为 2-3 步。FP32 自然路径仍保留更小的非零残留。
+    caveat: >-
+      右删失不能当成真实记忆长度。固定 16 样本/领域、batch 8 的配对 BF16/FP32
+      对照用于数值诊断，不并入主样本，也不作为独立任务复现。
+      精度切换包括权重转换及算术变化，不能单独归因于某个舍入算子。
+not_established:
+  - Jacobi approximation 或短梯度 horizon 导致快速恢复的因果解释
+  - 语义状态是否存在少数持久方向
+  - 自由数学解题收益或持续 latent reasoning
+  - 1.7B retrofit 的有效性
+sources:
+  - 03_experiments/t2mlr_impulse_preregistration.md
+  - 04_evidence/t2mlr_impulse_results.json
+  - 04_evidence/t2mlr_impulse_replay_sensitivity.json
+  - 04_evidence/t2mlr_impulse_precision_results.json
+  - 06_reports/t2mlr_impulse_results.md

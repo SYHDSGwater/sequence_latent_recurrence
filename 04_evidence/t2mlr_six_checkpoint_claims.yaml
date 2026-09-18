@@ -1,5 +1,5 @@
 claim_id: C-T2-SIX
-status: nll_matrix_complete_primary_impulse_metrics_pending
+status: nll_matrix_complete_impulse_followup_available
 scope: 六个冻结公开 checkpoint，各 256 WikiText 文档和 256 MATH-500 参考解答；数学远期 n=169；完整 KV、teacher forcing、BF16 exact inference。
 claims:
   - claim: 旧状态累积提供小幅平均预测收益。
@@ -15,10 +15,10 @@ claims:
     evidence: 135M/Wiki 随 10B 到 50B 下降，135M/Math 不明确，362M/982M 两领域均上升。
     caveat: 尚未确认同 seed 连续训练轨迹，不能作训练预算因果归因。
 pending:
-  - norm-controlled small perturbations with multiple fixed directions
-  - state and output impulse-response AUC
-  - recovery half-life
   - controlled Jacobi versus exact and short versus long credit training
+followup:
+  - 04_evidence/t2mlr_impulse_results.json
+  - 06_reports/t2mlr_impulse_results.md
 sources:
   - 04_evidence/t2mlr_six_checkpoint_results.json
   - 04_evidence/t2mlr_362m50b_math_exception.json

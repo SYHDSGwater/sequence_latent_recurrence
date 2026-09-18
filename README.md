@@ -1,5 +1,7 @@
 # Evidence-Driven Research OS
 
+Current T²MLR study: [six-checkpoint NLL results](06_reports/t2mlr_six_checkpoint_results.md), [Phase-A state/output impulse and precision audit](06_reports/t2mlr_impulse_results.md), and [reproduction instructions](experiments/t2mlr/README.md). Jacobi causal training remains unstarted; [H100 estimates](06_reports/t2mlr_jacobi_training_cost.md) are planning scenarios, not measured training throughput.
+
 > Ideas are abundant. Truth is scarce.
 
 Evidence-Driven Research OS is a lightweight workflow for doing research with frontier AI systems without turning the human researcher into the bottleneck. The system treats AI as a high-bandwidth search and execution layer, while the human operates the research control plane: defining objectives, constraining search, approving expensive experiments, inspecting anomalies, and updating the research agenda.

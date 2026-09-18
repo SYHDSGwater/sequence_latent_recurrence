@@ -1,5 +1,5 @@
 experiment_id: E-T2-002
-status: proposed
+status: phase_A_complete_phase_B_not_started
 
 question: >-
   T²MLR frozen checkpoint 中 recurrent state 的短程、快速恢复 dynamics，
@@ -165,17 +165,27 @@ failure_modes:
 
 result:
   phase_A_nll_matrix_status: complete_six_checkpoints_two_domains
-  phase_A_primary_impulse_metrics_status: pending
+  phase_A_primary_impulse_metrics_status: complete_six_checkpoints_two_domains
   phase_B_training_status: not_started
   phase_A_nll_report: 06_reports/t2mlr_six_checkpoint_results.md
+  phase_A_impulse_report: 06_reports/t2mlr_impulse_results.md
+  phase_A_impulse_evidence: 04_evidence/t2mlr_impulse_results.json
+  phase_A_precision_audit_status: complete_24_cells_16_fixed_examples_per_domain
+  phase_A_precision_evidence: 04_evidence/t2mlr_impulse_precision_results.json
   phase_A_nll_exception: 362M_50B_math_natural_reset_far_window_not_within_practical_interval
   raw_artifacts:
     - artifacts/expanded-results.tar.gz
     - artifacts/matrix-results.tar.gz
+    - artifacts/impulse-results.tar.gz
+    - artifacts/impulse-precision-results.tar.gz
   summary: >-
-    Phase-A comparable NLL component complete. All twelve carry_off CIs are positive;
-    362M/50B math natural-reset far-window CI fails the predefined small-effect criterion,
-    while clean-KV remains small. Primary impulse metrics and causal training remain pending.
+    Phase-A NLL and primary impulse components complete. All twelve prior carry_off CIs
+    are positive. New zero-reset state t50 medians are 1 step; natural t10 medians are
+    5-20 steps versus clean-KV 2-3. The 362M/50B math exception persists on the same data.
+    BF16 small-perturbation state recovery is censored; the paired FP32 audit gives
+    natural t10 medians 4-9 and clean-KV 2-3, with natural state AUC 8.8-17.4 times smaller.
+    These are numerical sensitivity results, not semantic memory or reasoning evidence.
+    No causal training has been performed.
   anomaly_detected: true
 
 interpretation:

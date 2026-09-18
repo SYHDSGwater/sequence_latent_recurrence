@@ -1,5 +1,24 @@
 # T²MLR recurrent 机制实验
 
+## Phase A 状态与输出脉冲测量
+
+`impulse_run.py` 对六个冻结 checkpoint 各运行 256 WikiText 和 256 MATH 输入，测量零重置、两个固定切向小扰动方向及各自 clean-KV 对照。预注册见 `03_experiments/t2mlr_impulse_preregistration.md`。`remote_impulse.sh` 复用已缓存权重和冻结输入；它的绝对路径与运行时设置对应本次 AutoDL 实例，迁移机器时需调整。
+
+`impulse_precision.py` 在预先固定的每领域 16 个完整窗口输入上，用相同 batch 8 比较 BF16 和 FP32。FP32 从 checkpoint 直接加载，不先降到 BF16；关闭 TF32。此数值审计不并入主样本，也不涉及训练。
+
+解包 `impulse-results.tar.gz` 至 `artifacts/impulse`，解包 `impulse-precision-results.tar.gz` 至 `artifacts/impulse_precision` 后，在仓库根目录运行：
+
+```sh
+python -m pytest experiments/t2mlr/test_impulse.py -q
+python experiments/t2mlr/impulse_analyze.py
+python experiments/t2mlr/impulse_precision_analyze.py
+python experiments/t2mlr/impulse_replay_compare.py
+python experiments/t2mlr/impulse_report.py
+python experiments/t2mlr/impulse_plot.py
+```
+
+`impulse_replay_compare.py` 还需要原 `expanded` 与 `matrix` 归档的解包目录。它量化本轮 batch 32 与旧 batch 64 的 BF16 数值敏感性，不要求逐 token 位相同。分析器核验完整样本、代码/输入哈希、实际扰动范数及自然/clean 的 lag-0 一致性。恢复时间要求连续五步达标，未达标按右删失报告；不能把删失上界当真实记忆长度。最终报告为 `06_reports/t2mlr_impulse_results.md`。
+
 ## 六 checkpoint 矩阵与 Jacobi 训练估算
 
 补齐的四个模型由 `matrix_prepare.py` 按 `01_literature/t2mlr_six_checkpoint_audit.json` 的固定 revision/LFS SHA256 下载，并与原 tokenizer 后端严格比对。`remote_matrix.sh` 复用冻结样本执行新增八个 cell，`remote_matrix_prefetch.sh` 可在推理期间预取后续权重（同模型文件锁防止重复写入）。原始结果归档为 `artifacts/matrix-results.tar.gz`。
@@ -13,7 +32,7 @@ python experiments/t2mlr/matrix_plot.py
 python experiments/t2mlr/estimate_training_cost.py
 ```
 
-矩阵只补齐同配方 NLL 测量，E-T2-002 的 small-perturbation、state/KL AUC、恢复半衰期仍须单独测量。训练估算见 `06_reports/t2mlr_jacobi_training_cost.md`：吞吐是未实测的预算情景，不是 H100 benchmark；本轮没有执行训练。
+矩阵归档包含同配方 NLL 测量；E-T2-002 的 small-perturbation、state/KL AUC、恢复阈值测量由上面的独立 impulse 流程提供。训练估算见 `06_reports/t2mlr_jacobi_training_cost.md`：吞吐是未实测的预算情景，不是 H100 benchmark；本轮没有执行训练。
 
 ## 扩大实验：两个 checkpoint × 两类数据
 

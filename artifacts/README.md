@@ -1,5 +1,17 @@
 # Archived T²MLR results
 
+The Phase-A impulse archives are `impulse-results.tar.gz` and `impulse-precision-results.tar.gz`. The first contains six checkpoints × two domains, six intervention arms plus a paired baseline, frozen inputs, per-token state/KL/NLL traces, actual injection sizes, and manifests. The second contains the fixed 16-example-per-domain BF16/FP32 numerical audit. It does not contain training runs. Extract to separate directories:
+
+```sh
+mkdir -p artifacts/impulse artifacts/impulse_precision
+tar -xzf artifacts/impulse-results.tar.gz -C artifacts/impulse
+tar -xzf artifacts/impulse-precision-results.tar.gz -C artifacts/impulse_precision
+python experiments/t2mlr/impulse_analyze.py
+python experiments/t2mlr/impulse_precision_analyze.py
+```
+
+The report and plotting commands are documented in `experiments/t2mlr/README.md`. The prior expanded/matrix archives are additionally required for the batch-sensitivity comparison. Numerical audits use the same frozen data and are not independent task replications.
+
 The initial four tracked archives contain the original results for the initial study and its expansion. Check SHA256 and sizes against `04_evidence/t2mlr_raw_archives.json` before extraction. Model weights and runtime environments are not included.
 
 The additional `matrix-results.tar.gz` contains the four remaining public checkpoint evaluations. It uses the same frozen input selection. Extract it to `artifacts/matrix`, alongside the existing `artifacts/expanded` extraction, then run `python experiments/t2mlr/matrix_analyze.py` from the repository root to recompute all six checkpoints and within-scale 50B-minus-10B paired differences.
