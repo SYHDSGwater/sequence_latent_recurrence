@@ -1,0 +1,82 @@
+experiment_id: E-SCANLR-001
+status: proposed
+
+question: >-
+  Can a composition-closed sequence-axis latent recurrence recover most Transformer
+  training parallelism while retaining measurable recurrent utility?
+
+architecture_ref: 02_hypotheses/scan_friendly_latent_recurrence.md
+
+primary_candidate:
+  name: ScanLR-Block
+  transition: "4x4 block-affine latent scan"
+  integration: "nonlinear Transformer read/write side-channel"
+  implementation: "chunked fused prefix scan"
+
+baselines:
+  - vanilla_transformer
+  - ScanLR-Diag
+  - ScanLR-Block
+  - optional_T2MLR_like_reference_if_cost_allows
+
+stage_0_math_and_kernel:
+  goals:
+    - verify sequential recurrence equals associative scan numerically
+    - verify backward gradients against sequential reference
+    - measure throughput before substantial pretraining
+  success_gate:
+    - "optimized ScanLR throughput >= 0.8x vanilla Transformer target"
+    - "no material numerical divergence between sequential and scan implementations"
+  stop_if:
+    - "throughput remains <0.6x vanilla after reasonable kernel optimization"
+    - "gradient parity cannot be established"
+
+stage_1_small_training:
+  model_size: "30M-100M non-embedding params"
+  context: [512, 2048]
+  seeds: [0, 1, 2]
+  controls:
+    - same tokenizer
+    - same data order
+    - same optimizer and LR schedule
+    - matched global batch
+    - matched training tokens
+    - report FLOPs and wall-clock separately
+  metrics:
+    quality:
+      - validation_nll
+      - downstream_small_suite
+    recurrence:
+      - carry_off_delta_nll
+      - zero_reset_recovery
+      - clean_kv_recovery
+      - state_impulse_auc
+    systems:
+      - tokens_per_second
+      - achieved_tflops
+      - peak_memory
+      - gpu_hours
+
+stage_2_architecture_ablation:
+  compare:
+    - "diagonal vs 4x4 block-affine"
+    - "4x4 block-affine vs decay+rotation"
+    - "one scan module vs two scan modules"
+    - "state width sweep"
+  decision_rule: >-
+    Prefer the cheapest formulation on the quality/utility/wall-clock Pareto frontier;
+    do not select a more expressive recurrence if its gain disappears under compute matching.
+
+stage_3_long_horizon_if_positive:
+  optional:
+    - "hierarchical chunk-level nonlinear recurrence"
+    - "long-context persistence tests"
+    - "projective/Mobius recurrence"
+  gate: >-
+    Only enter this stage if block-affine ScanLR both preserves near-Transformer
+    training efficiency and shows non-trivial recurrent utility.
+
+primary_falsifier: >-
+  If a scan-friendly recurrent side-channel cannot preserve near-baseline Transformer
+  throughput, or if its recurrent-path utility is negligible under compute-matched
+  training, it does not solve the current sequence-axis recurrence scaling trap.
