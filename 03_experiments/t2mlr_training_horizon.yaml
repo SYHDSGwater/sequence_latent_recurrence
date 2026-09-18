@@ -1,0 +1,166 @@
+experiment_id: E-T2-002
+status: proposed
+
+question: >-
+  T²MLR frozen checkpoint 中 recurrent state 的短程、快速恢复 dynamics，
+  是否由 temporal-parallel Jacobi training 与短 recurrent gradient horizon 因果塑造？
+
+hypotheses_tested:
+  - H-T2-JACOBI-CONTRACTION
+  - H-T2-LOCAL
+  - H-T2-PERSIST
+  - H-T2-KV
+
+prediction_matrix:
+  H-T2-JACOBI-CONTRACTION: >-
+    增加 backward horizon（4 -> 16/32/long）应系统性增加 state/output persistence；
+    exact sequential 与 Jacobi 的差异可进一步识别 forward approximation 的贡献。
+  H-T2-LOCAL: >-
+    persistence 对 training horizon 不敏感；即使 long BPTT，single-reset effect 仍快速恢复。
+  H-T2-PERSIST: >-
+    long-horizon training 应揭示更明显的远期内容特异 state utility；若仍无远期收益则削弱该解释。
+  H-T2-KV: >-
+    natural rollout 长尾应大于 clean-KV；若 horizon 增加后 clean-KV 长尾仍弱，
+    attention-mediated reconstruction 仍可能是主要恢复通路。
+
+phases:
+  phase_A_public_checkpoint_matrix:
+    purpose: "不训练；测试 persistence 更像共同 recipe 属性，还是随 scale/training tokens 系统变化"
+    checkpoints:
+      - 135M_10B
+      - 135M_50B
+      - 362M_10B
+      - 362M_50B
+      - 982M_10B
+      - 982M_50B
+    identification:
+      within_scale_10B_vs_50B: "观察 training-budget 变化；仍非 training-horizon 因果检验"
+      cross_scale: "仅描述性，不做 scaling 因果结论"
+    interventions:
+      - zero_reset_once
+      - norm_controlled_small_perturbation
+      - clean_kv_zero_reset
+      - carry_off
+    data:
+      text: "沿用冻结的 256 WikiText-103 文档选择"
+      math: "沿用冻结的 256 MATH-500 reference-solution 选择"
+    primary_metrics:
+      - "state impulse-response AUC over lag 1-64"
+      - "recovery half-life / time-to-10%-amplitude"
+      - "output KL AUC over lag 1-64"
+    secondary_metrics:
+      - "signed Delta NLL: lag 0, 1-7, 8-31, 32-127"
+      - "absolute tokenwise Delta NLL"
+      - "natural vs clean-KV persistence gap"
+      - "carry_off Delta NLL"
+    analysis:
+      - "document/problem bootstrap 2000 次，95% CI"
+      - "token 不作为独立样本"
+      - "响应非单调时不强制指数拟合；AUC/half-life 为主"
+      - "small perturbation 至少 2-4 个固定随机方向"
+
+  phase_B_causal_training_grid:
+    purpose: "直接操纵 forward/backward recurrence horizon，识别 training recipe 的因果作用"
+    common_setup:
+      model_size_target: "30M-100M non-embedding params"
+      context_length: "先 128，确认后扩 256"
+      data: "固定 FineWeb-Edu/同源 LM 子集；所有 arm 完全相同 data order"
+      token_budget: "先 pilot；通过 gate 后再扩到足以稳定比较 validation loss 的预算"
+      optimizer: "所有 arm 相同 optimizer/LR/warmup/weight decay/global batch"
+      seeds: [0, 1, 2]
+    arms:
+      A:
+        name: jacobi_16_4
+        forward: "Jacobi d_forward=16"
+        backward: "d_backward=4"
+        role: "T²MLR-like reference"
+      B:
+        name: jacobi_16_16
+        forward: "Jacobi d_forward=16"
+        backward: "d_backward=16"
+        role: "isolate longer recurrent credit horizon"
+      C:
+        name: jacobi_32_16
+        forward: "Jacobi d_forward=32"
+        backward: "d_backward=16"
+        role: "test extra forward refinement"
+      D:
+        name: exact_seq_tbptt4
+        forward: "exact sequential recurrence"
+        backward: "TBPTT horizon=4"
+        role: "isolate Jacobi forward approximation"
+      E:
+        name: exact_seq_long
+        forward: "exact sequential recurrence"
+        backward: "TBPTT horizon=16/32；若 context=128 且预算允许，增加 full BPTT"
+        role: "test long recurrent credit"
+      F:
+        name: no_recurrence_control
+        forward: "same backbone with recurrent path disabled in a training-matched control"
+        backward: "standard"
+        role: "separate recurrence utility from general optimization differences"
+    staged_execution:
+      stage_0_smoke: "验证 logits/loss parity、cache/reset semantics、gradient graph"
+      stage_1_pilot: "检查 stability、throughput、显存与 persistence metric"
+      stage_2_mechanism: "优先 A/B/D/E × 3 seeds；只有 horizon-dependent signal 才扩大"
+      stage_3_confirmation: "第二 context length 或第二 model size 复核关键 contrast"
+
+controls:
+  - "所有 arm 相同 initialization seed pairing"
+  - "相同 tokenizer、data order、global batch、optimizer 与 LR schedule"
+  - "Jacobi/Exact recurrent layer span、gate、fusion 参数一致"
+  - "document boundary 同时 reset state 与 KV"
+  - "small perturbation 与 zero reset 同时报告"
+  - "额外 training FLOPs/wall-clock 单独报告，不能只做 token-matched 结论"
+
+metrics:
+  primary:
+    - "state impulse-response AUC(1:64)"
+    - "recovery half-life / time-to-10%"
+    - "clean-KV absolute Delta NLL(32:127)"
+  secondary:
+    - "validation NLL"
+    - "natural far-window signed/absolute Delta NLL"
+    - "output KL AUC"
+    - "carry_off Delta NLL"
+    - "gradient norm through recurrent path by temporal lag"
+    - "training throughput, GPU-hours, peak memory"
+
+decision_rules:
+  support_short_credit_cause: >-
+    B 相对 A、E 相对 D 在 seed-paired comparisons 中稳定增加 persistence，
+    且第二 context/model confirmation 保持方向。
+  support_forward_jacobi_effect: >-
+    A 与 D 在相同 short backward horizon 下出现稳定 persistence 差异。
+  support_attention_or_architecture_null: >-
+    A/B/D/E 在多 seed 上基本等价，long/full BPTT 也不产生更长 temporal utility。
+  weaken_long_horizon_reasoning_claim: >-
+    persistence 变长但 validation/任务收益不增加，则 persistent state 不是 useful latent reasoning 的充分条件。
+
+cost:
+  estimated_gpu_hours: null
+  actual_gpu_hours: null
+  budget_policy: >-
+    Phase A 优先复用 inference pipeline；Phase B 使用 stage gate，
+    先 30M-100M + context 128 做因果识别，再决定是否扩展。
+
+failure_modes:
+  - "small-scale dynamics 不一定外推到 1B"
+  - "longer BPTT 同时增加 optimization difficulty"
+  - "full BPTT 若不可行必须记录未完成，不用弱设置静默替代"
+  - "Jacobi/Exact numerical semantics 不一致会污染归因"
+  - "cross-scale checkpoint 对比仅描述性"
+  - "更长 persistence 不自动等于 useful reasoning"
+
+result:
+  raw_artifacts: []
+  summary: null
+  anomaly_detected: false
+
+interpretation:
+  supported_hypotheses: []
+  weakened_hypotheses: []
+  unresolved_confounds:
+    - attention_reconstruction
+    - small_scale_external_validity
+    - optimization_difficulty_of_long_bptt
