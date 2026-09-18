@@ -1,0 +1,27 @@
+project:
+  name: example-project
+  owner: human
+
+budget:
+  gpu_type: H100
+  max_gpu_hours: 20
+  max_wall_clock_hours: 48
+
+research_constraints:
+  require_equal_train_flops: false
+  require_equal_inference_flops: false
+  require_multiple_seeds: true
+  minimum_seeds: 3
+  require_reproducible_config: true
+
+human_gates:
+  approve_expensive_runs: true
+  expensive_run_threshold_gpu_hours: 4
+  approve_scope_change: true
+  approve_final_claim: true
+
+attention_budget:
+  max_mechanism_clusters: 20
+  max_hypotheses_for_human_review: 8
+  max_experiments_per_cycle: 3
+  max_deep_reads_per_cycle: 2

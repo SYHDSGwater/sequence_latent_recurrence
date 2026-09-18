@@ -1,0 +1,44 @@
+hypothesis_id: H000
+status: proposed
+mechanism_cluster: null
+
+claim: >-
+  One concise causal claim.
+
+mechanism: >-
+  The mechanism that would make the claim true.
+
+assumptions:
+  - assumption 1
+
+unique_prediction: >-
+  Observation expected under this hypothesis that differs from major alternatives.
+
+falsifier: >-
+  Observation that would materially reduce confidence in this hypothesis.
+
+confounders:
+  - confounder 1
+
+null_explanation: >-
+  Simplest artifact or non-causal explanation.
+
+minimal_test:
+  description: >-
+    Cheapest useful discrimination test.
+  separates:
+    - H000
+  estimated_gpu_hours: 0
+
+expected_information_gain: medium
+
+provenance:
+  generated_by: null
+  literature_refs: []
+  created_at: null
+
+belief:
+  prior: null
+  current: null
+
+notes: null

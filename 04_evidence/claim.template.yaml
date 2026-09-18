@@ -1,0 +1,20 @@
+claim_id: C000
+claim: >-
+  A concise research claim.
+
+status: unresolved
+
+supporting_evidence: []
+contradicting_evidence: []
+
+unresolved_confounds:
+  - null
+
+confidence:
+  value: null
+  rationale: null
+
+last_updated_by: null
+last_updated_at: null
+
+notes: null

@@ -1,0 +1,46 @@
+experiment_id: E000
+status: proposed
+
+question: >-
+  What uncertainty does this experiment reduce?
+
+hypotheses_tested:
+  - H000
+
+prediction_matrix:
+  H000: >-
+    Expected observation if H000 is true.
+
+controls:
+  - control 1
+
+metrics:
+  primary: null
+  secondary: []
+
+implementation:
+  code_ref: null
+  config_ref: null
+  data_version: null
+  seeds: [0, 1, 2]
+  hardware: null
+
+cost:
+  estimated_gpu_hours: 0
+  actual_gpu_hours: null
+
+failure_modes:
+  - failure mode 1
+
+decision_rule: >-
+  State in advance what observations would increase or decrease belief in each hypothesis.
+
+result:
+  raw_artifacts: []
+  summary: null
+  anomaly_detected: false
+
+interpretation:
+  supported_hypotheses: []
+  weakened_hypotheses: []
+  unresolved_confounds: []
