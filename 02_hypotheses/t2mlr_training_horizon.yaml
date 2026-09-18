@@ -1,5 +1,5 @@
 hypothesis_id: H-T2-JACOBI-CONTRACTION
-status: proposed
+status: unresolved_not_pursued_due_compute
 mechanism_cluster: training_induced_temporal_horizon
 
 claim: >-
@@ -72,4 +72,4 @@ notes: >-
   固定 16 样本/领域的同 batch 精度对照中，小扰动自然 state AUC 在 FP32 下缩小
   8.8-17.4 倍，t10 中位数为自然 4-9、clean 2-3 步。BF16 长尾不能直接当作
   语义记忆；FP32 自然路径仍有更小残留，亦不能宣布所有状态信息消失。
-  训练尚未执行，当前不据此提升该因果假说的置信度。
+  训练尚未执行，当前不据此提升该因果假说的置信度。\n  2026-09-18 项目决策：不再进行 BPTT / long-BPTT causal training。该假说保留为 unresolved，\n  但因 expected information gain / GPU-hour 过低而停止追踪；重新打开的前提是出现更接近\n  vanilla Transformer parallel efficiency 的 sequence-axis recurrence training method。
