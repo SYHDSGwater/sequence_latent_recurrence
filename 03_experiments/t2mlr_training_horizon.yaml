@@ -1,5 +1,5 @@
 experiment_id: E-T2-002
-status: phase_A_complete_phase_B_not_started
+status: phase_A_complete_phase_B_stopped_compute_efficiency
 
 question: >-
   T²MLR frozen checkpoint 中 recurrent state 的短程、快速恢复 dynamics，
@@ -166,7 +166,7 @@ failure_modes:
 result:
   phase_A_nll_matrix_status: complete_six_checkpoints_two_domains
   phase_A_primary_impulse_metrics_status: complete_six_checkpoints_two_domains
-  phase_B_training_status: not_started
+  phase_B_training_status: stopped_not_pursued_due_compute_efficiency
   phase_A_nll_report: 06_reports/t2mlr_six_checkpoint_results.md
   phase_A_impulse_report: 06_reports/t2mlr_impulse_results.md
   phase_A_impulse_evidence: 04_evidence/t2mlr_impulse_results.json
@@ -185,7 +185,7 @@ result:
     BF16 small-perturbation state recovery is censored; the paired FP32 audit gives
     natural t10 medians 4-9 and clean-KV 2-3, with natural state AUC 8.8-17.4 times smaller.
     These are numerical sensitivity results, not semantic memory or reasoning evidence.
-    No causal training has been performed.
+    No causal training has been performed. Phase B is now explicitly stopped because exact/long BPTT is too inefficient and Jacobi training remains materially slower than vanilla parallel Transformer training.
   anomaly_detected: true
 
 interpretation:
@@ -195,3 +195,14 @@ interpretation:
     - attention_reconstruction
     - small_scale_external_validity
     - optimization_difficulty_of_long_bptt
+
+
+project_decision:
+  status: stopped
+  date: "2026-09-18"
+  reason: >-
+    不再执行 BPTT / long-BPTT causal training。Exact recurrent BPTT 的 token-serial dependency
+    使 scale-up 成本过高；T²MLR Jacobi approximation 虽改善可训练性，但 measured wall-clock 仍约
+    数倍/约 2.24× baseline regime，尚未解决 compute efficiency。当前更高价值问题是先寻找接近
+    vanilla Transformer parallel efficiency 的 sequence-axis recurrence training method。
+  decision_ref: 05_decisions/2026-09-18_compute_efficiency_pivot.md
