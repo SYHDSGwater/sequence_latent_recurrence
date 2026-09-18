@@ -1,0 +1,52 @@
+experiment_id: E-T2-001
+status: completed_on_rtx_5090d
+question: recurrent state 的预测贡献具有何种内容特异性、持续性与传播路径？
+hypotheses_tested: [H-T2-LOCAL, H-T2-PERSIST, H-T2-KV]
+prediction_matrix:
+  H-T2-LOCAL: immediate_effect_but_small_clean_kv_long_tail
+  H-T2-PERSIST: donor_and_carry_off_harm_with_clean_kv_long_tail
+  H-T2-KV: natural_long_tail_reduced_under_clean_kv
+controls:
+  - CPU tiny model 与当前官方 simple_recurrent_forward 逐步 logits/state 一致
+  - 相同文本 teacher forcing；文档之间同时清空 state 和 KV
+  - donor 来自另一独立文档、相同位置，按 recipient norm 缩放
+  - reset 前输出必须相同；fusion_off 与 fusion_and_carry_off 必须一致
+  - carry_off 保留 state post norm；fusion_off 绕过整个融合，不称作原始 Transformer
+metrics:
+  primary: '单次 reset 的 lag 32-127 文档平均 delta NLL，natural 与 clean-KV 各报告'
+  secondary: [lag_0, lag_1_7, lag_8_31, donor_delta_nll, periodic_reset_delta_nll, carry_off_delta_nll]
+implementation:
+  code_ref: experiments/t2mlr/run.py
+  config_ref: 01_literature/t2mlr_public_artifacts_2026-09-18.json
+  data_version: Salesforce/wikitext b08601e04326c79dfdd32d625aee71d232d685c3, wikitext-103-raw-v1 validation/test reconstructed articles
+  seeds: [0]
+  hardware: 单张 RTX 5090D 32GB，用户在执行时指定替代 H100
+  sequence_length: 512
+  documents_target: 32
+  confirmation_reset_position: 256
+  primary_reset_position: 128
+cost:
+  estimated_gpu_hours: 5.0
+  actual_gpu_hours: null
+  measured_evaluation_job_wall_seconds: 1829.8978113811463
+  cost_note: 该秒数为主实验、确认和探索性补测三进程的墙钟时间总和，含加载；不等于实测 GPU 忙碌时间或账单。预检、环境和下载另计。
+  allocations: {load_parity_throughput: 0.5, reset_donor_periodic: 1.5, carry_and_negative_controls: 1.0, clean_kv: 1.0, confirmation_reserve: 1.0}
+failure_modes:
+  - 982M 名称不代表模型属于 1.7B retrofit 实验；不能直接在数学榜单检验其论文结论
+  - 单次 reset 的自然长尾也可来自 KV；zero 分布偏移可夸大功能必要性
+  - 固定 token 预算消融无法证明训练或参数效率优势
+  - 没有足够独立文档时 CI 没有可靠推断价值
+  - 5 小时为分配上限而非经过硬件测量的耗时预测，clean-KV deepcopy 可能较慢
+decision_rule: >-
+  双侧按文档 bootstrap 95% CI。预注册实用等效界 ±0.01 nat/token；CI 全在界内才称该终点近零，跨零但很宽为未定。
+  lag 32-127 自然和 clean-KV 分别报告；多个次要终点仅探索，不通过择优窗口宣称显著。
+  donor、carry_off 和路径阻断共同更新信念，不以任何单项消融断言 latent reasoning。
+result:
+  raw_artifacts: [artifacts/5090/artifacts/primary, artifacts/5090/artifacts/confirmation, artifacts/5090/artifacts/diagnostics]
+  summary: 06_reports/t2mlr_5090_results.md
+  anomaly_detected: false
+interpretation:
+  supported_hypotheses: [H-T2-LOCAL]
+  weakened_hypotheses: [H-T2-PERSIST]
+  qualification: LOCAL 仅在快速衰减和平均代价意义下获得支持；PERSIST 的强长程收益解释被削弱，但累积项的小幅收益得到重复。
+  unresolved_confounds: [distribution_shift, attention_compensation, bf16_small_residuals, near_effect_not_confirmed]

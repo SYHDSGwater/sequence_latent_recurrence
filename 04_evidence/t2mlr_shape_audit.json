@@ -1,0 +1,8 @@
+{
+  "model": "JupiterZhu/T2MLR_982M_lstart9_lend24_50B_FineWebEdu",
+  "revision": "5061964f36236336153106d4b11155e09ee2daaa",
+  "tensor_count": 298,
+  "shape_mismatches": {},
+  "weights_downloaded": false,
+  "limitation": "Metadata parity only; tied tensor equality and BF16 inference remain unchecked"
+}

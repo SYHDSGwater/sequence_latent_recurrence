@@ -1,0 +1,35 @@
+claim_id: C-T2-5090
+status: primary_confirmation_and_exploratory_diagnostics_complete
+scope: 冻结 T2MLR 982M/50B checkpoint，WikiText 英文文章前缀，完整 attention 历史，teacher-forced exact BF16 inference。
+claims:
+  - claim: 单次 reset 的 lag 32-127 平均预测代价小。
+    evidence: 自然和 clean-KV 在主实验与确认的 95% CI 均完整位于预注册 ±0.01 nat/token。
+    strength: replicated_within_scope
+    caveat: 不等于 state 或输出分布完全相同，不排除 attention 重建或少数样本效应。
+  - claim: 加法旧状态累积提供小幅预测收益。
+    evidence: carry_off 主实验 +0.02192 [0.01748,0.02644]；确认 +0.01637 [0.01214,0.02051] nat/token。
+    strength: replicated_secondary_endpoint
+    caveat: 不证明多步推理机制。
+  - claim: 冻结权重依赖反馈融合路径。
+    evidence: 持续 zero_every +5.1367；fusion_off +2.7824 nat/token，主实验 32 文档。
+    strength: primary_only
+    caveat: 消融分布偏移明显，非训练匹配的架构优势证据。
+  - claim: 当步平均损失增加跨集合稳定。
+    evidence: 主实验显著，确认 reset/donor 当步 CI 均跨零。
+    strength: not_confirmed
+    caveat: 数据与干预位置同时变化，当前不能归因。
+  - claim: 单次扰动的远期残留大幅减小，但没有完全消失。
+    evidence: 探索性补测自然 reset 的 KL 从 0.5466 降到远期 0.001024；state 相对 L2 从 0.3816 降到 0.01007；远期绝对 NLL 差仍为 0.02712。
+    strength: exploratory_same_primary_documents
+    caveat: 有符号 NLL 存在正负抵消；没有 FP32 对照或预注册 KL 等效阈值，不能宣称所有状态影响消失。
+sources:
+  - 04_evidence/t2mlr_5090_results.json
+  - 04_evidence/t2mlr_5090_gpu_validation.json
+  - 04_evidence/t2mlr_5090_data_provenance.json
+  - 04_evidence/t2mlr_5090_diagnostics.json
+  - artifacts/5090/artifacts/primary/token_traces.jsonl
+  - artifacts/5090/artifacts/confirmation/token_traces.jsonl
+unresolved:
+  - 自然长尾过小，不能用本轮平均 NLL 判断 KV 是否主导长程信息。
+  - 没有多步任务或训练匹配对照。
+  - WikiText 可能出现在预训练数据。

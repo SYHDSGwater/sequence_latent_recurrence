@@ -1,0 +1,19 @@
+{
+  "dataset": "Salesforce/wikitext",
+  "revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+  "subset": "wikitext-103-raw-v1",
+  "license": [
+    "cc-by-sa-3.0",
+    "gfdl"
+  ],
+  "selection": "reconstruct articles using level-one headings; retain source order; runner selects first length-eligible documents",
+  "limitation": "Possible pretraining overlap; dependency diagnosis only",
+  "validation": {
+    "articles": 60,
+    "sha256": "35f96de6ef4838e550c6f54a18c8cee3de1719e5331b4eb8576ac9407f49f82c"
+  },
+  "test": {
+    "articles": 62,
+    "sha256": "a31c0932ae42f7056ad77e1affef7792db2d6e582f1240f193b62eed0db0e807"
+  }
+}

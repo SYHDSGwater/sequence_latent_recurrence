@@ -1,0 +1,289 @@
+[
+  {
+    "directory": "artifacts\\5090\\artifacts\\primary",
+    "manifest_status": "complete",
+    "completed_documents": 32,
+    "normal_post_warmup_nll": 2.338725396196248,
+    "normal_post_warmup_ppl": 10.368013028295245,
+    "control_checks": {
+      "reset_once_prefix_max_abs_diff": 0.0,
+      "donor_once_prefix_max_abs_diff": 0.0,
+      "reset_once_clean_kv_prefix_max_abs_diff": 0.0,
+      "fusion_carry_negative_control_max_abs_diff": 0.0
+    },
+    "controls_pass": true,
+    "summary": {
+      "reset_once": {
+        "lag_0_0": {
+          "mean_delta_nll": 0.4791403791750781,
+          "ci95": [
+            0.08007758394669509,
+            0.9057160772397758
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        },
+        "lag_1_7": {
+          "mean_delta_nll": 0.051203030758188106,
+          "ci95": [
+            0.0030324683813887534,
+            0.11158533615362101
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        },
+        "lag_8_31": {
+          "mean_delta_nll": 0.0005521317116290447,
+          "ci95": [
+            -0.004445293274625328,
+            0.005934864267737791
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        },
+        "lag_32_127": {
+          "mean_delta_nll": 0.0006317146880974178,
+          "ci95": [
+            -0.0013168517298026926,
+            0.0027338543374071348
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      },
+      "donor_once": {
+        "lag_0_0": {
+          "mean_delta_nll": 0.7205461426638067,
+          "ci95": [
+            0.4179612308871583,
+            1.057868984702509
+          ],
+          "documents": 32,
+          "bootstrap_units": 8,
+          "bootstrap_block_size": 4,
+          "inference_valid": true
+        },
+        "lag_1_7": {
+          "mean_delta_nll": 0.030830535895802313,
+          "ci95": [
+            -0.01176992217606312,
+            0.08344144976981621
+          ],
+          "documents": 32,
+          "bootstrap_units": 8,
+          "bootstrap_block_size": 4,
+          "inference_valid": true
+        },
+        "lag_8_31": {
+          "mean_delta_nll": 9.051549864125263e-05,
+          "ci95": [
+            -0.007716147858945988,
+            0.007158196419186424
+          ],
+          "documents": 32,
+          "bootstrap_units": 8,
+          "bootstrap_block_size": 4,
+          "inference_valid": true
+        },
+        "lag_32_127": {
+          "mean_delta_nll": 0.0009740428322402295,
+          "ci95": [
+            -0.0008947699205236858,
+            0.0028780795485545234
+          ],
+          "documents": 32,
+          "bootstrap_units": 8,
+          "bootstrap_block_size": 4,
+          "inference_valid": true
+        }
+      },
+      "reset8": {
+        "post_warmup": {
+          "mean_delta_nll": 0.2174009126611054,
+          "ci95": [
+            0.2042696301592514,
+            0.23140011337818578
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      },
+      "reset32": {
+        "post_warmup": {
+          "mean_delta_nll": 0.04131565903662704,
+          "ci95": [
+            0.034534854733283285,
+            0.04799181132002559
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      },
+      "reset128": {
+        "post_warmup": {
+          "mean_delta_nll": 0.008000345532309439,
+          "ci95": [
+            0.005092773628234681,
+            0.01081309058579336
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      },
+      "zero_every": {
+        "post_warmup": {
+          "mean_delta_nll": 5.13673397898674,
+          "ci95": [
+            5.0533154182136055,
+            5.220770389959216
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      },
+      "carry_off": {
+        "post_warmup": {
+          "mean_delta_nll": 0.02191660328389844,
+          "ci95": [
+            0.017484105792937042,
+            0.02643892194992076
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      },
+      "fusion_off": {
+        "post_warmup": {
+          "mean_delta_nll": 2.7824243530631065,
+          "ci95": [
+            2.7165116777643563,
+            2.8580300679430364
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      },
+      "fusion_and_carry_off": {
+        "post_warmup": {
+          "mean_delta_nll": 2.7824243530631065,
+          "ci95": [
+            2.7165116777643563,
+            2.8580300679430364
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      },
+      "reset_once_clean_kv": {
+        "lag_0_0": {
+          "mean_delta_nll": 0.4791403791750781,
+          "ci95": [
+            0.08007758394669509,
+            0.9057160772397758
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        },
+        "lag_1_7": {
+          "mean_delta_nll": 0.0028893150367821363,
+          "ci95": [
+            -0.025364717236863045,
+            0.036511356877252855
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        },
+        "lag_8_31": {
+          "mean_delta_nll": 3.717968911587377e-05,
+          "ci95": [
+            -0.001895300653029608,
+            0.0022033088903981477
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        },
+        "lag_32_127": {
+          "mean_delta_nll": -0.0005339356208082791,
+          "ci95": [
+            -0.0014545980411071469,
+            0.00038767108010944075
+          ],
+          "documents": 32,
+          "bootstrap_units": 32,
+          "bootstrap_block_size": 1,
+          "inference_valid": true
+        }
+      }
+    },
+    "interpretations": {
+      "reset_once": {
+        "lag_0_0": "harm_exceeds_practical_threshold",
+        "lag_1_7": "uncertain_at_practical_threshold",
+        "lag_8_31": "within_practical_equivalence_band",
+        "lag_32_127": "within_practical_equivalence_band"
+      },
+      "donor_once": {
+        "lag_0_0": "harm_exceeds_practical_threshold",
+        "lag_1_7": "uncertain_at_practical_threshold",
+        "lag_8_31": "within_practical_equivalence_band",
+        "lag_32_127": "within_practical_equivalence_band"
+      },
+      "reset8": {
+        "post_warmup": "harm_exceeds_practical_threshold"
+      },
+      "reset32": {
+        "post_warmup": "harm_exceeds_practical_threshold"
+      },
+      "reset128": {
+        "post_warmup": "uncertain_at_practical_threshold"
+      },
+      "zero_every": {
+        "post_warmup": "harm_exceeds_practical_threshold"
+      },
+      "carry_off": {
+        "post_warmup": "harm_exceeds_practical_threshold"
+      },
+      "fusion_off": {
+        "post_warmup": "harm_exceeds_practical_threshold"
+      },
+      "fusion_and_carry_off": {
+        "post_warmup": "harm_exceeds_practical_threshold"
+      },
+      "reset_once_clean_kv": {
+        "lag_0_0": "harm_exceeds_practical_threshold",
+        "lag_1_7": "uncertain_at_practical_threshold",
+        "lag_8_31": "within_practical_equivalence_band",
+        "lag_32_127": "within_practical_equivalence_band"
+      }
+    },
+    "caveat": "Unadjusted exploratory CIs except preregistered endpoints; signed mean effects can cancel; no architecture advantage or latent reasoning claim"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "gpu": "NVIDIA GeForce RTX 5090 D",
+  "torch": "2.8.0+cu128",
+  "dtype": "bfloat16",
+  "tokens_per_document": 8,
+  "documents": 2,
+  "max_logit_diff": 0.0,
+  "max_state_diff": 0.0,
+  "strict_weight_load": true,
+  "tied_weights_equal": true,
+  "passed": true
+}

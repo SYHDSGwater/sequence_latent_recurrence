@@ -1,0 +1,560 @@
+{
+  "reset_once": {
+    "kl_normal_to_intervention": {
+      "lag_0_0": {
+        "ci95": [
+          0.3064986047262209,
+          0.8684141652163816
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.5466153590823524
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.02195023743852289,
+          0.06713493674715208
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.04222429820947582
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.001906296846618716,
+          0.004665112409065839
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.003166474738463876
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.0007474317792684815,
+          0.0014290189200664811
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.0010242826710964437
+      }
+    },
+    "state_relative_l2": {
+      "lag_0_0": {
+        "ci95": [
+          0.35836178630124776,
+          0.40638610436581074
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.381580269895494
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.046725893690017985,
+          0.0650297628089902
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.05555498832836747
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.013440059350250522,
+          0.018404066401126327
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.015877280151471496
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.008949458912320551,
+          0.011383025930990696
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.010074479811009951
+      }
+    },
+    "state_cosine_distance": {
+      "lag_0_0": {
+        "ci95": [
+          0.04194146986119449,
+          0.057011982379481185
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.04906819760799408
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.0018387891681641122,
+          0.003287028184149676
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.0025106043212872464
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.00012006430676194668,
+          0.0002368264575437706
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.0001762984327910999
+      },
+      "lag_32_127": {
+        "ci95": [
+          4.340734661951728e-05,
+          0.00010019727317853721
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 6.825626377349181e-05
+      }
+    },
+    "absolute_delta_nll": {
+      "lag_0_0": {
+        "ci95": [
+          0.5169180847587995,
+          1.2241994766751305
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.8528445518459193
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.110642325176741,
+          0.2316434569947887
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.1656561850104481
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.03670635811868124,
+          0.05643857247923732
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.04577651259023696
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.024348190231830814,
+          0.03033286396967014
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.027124168525915593
+      }
+    }
+  },
+  "donor_once": {
+    "kl_normal_to_intervention": {
+      "lag_0_0": {
+        "ci95": [
+          0.4048639329877915,
+          0.9009662751312134
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.6379401678277645
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.020443396150221817,
+          0.06315109774432127
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.03914349298065645
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.0022152691864903316,
+          0.004003370523423655
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.0029578431394838844
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.0009611617535711048,
+          0.0013294765874206859
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.0011470567933429265
+      }
+    },
+    "state_relative_l2": {
+      "lag_0_0": {
+        "ci95": [
+          0.2557497952831909,
+          0.3089247255469672
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.2824740861542523
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.04724854744126787,
+          0.06289243256178452
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.05502718343632296
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.014124180423095822,
+          0.017599687521578745
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.015846619906369597
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.00941822839413362,
+          0.010498809278942645
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.009929388310411014
+      }
+    },
+    "state_cosine_distance": {
+      "lag_0_0": {
+        "ci95": [
+          0.036051899287849666,
+          0.051646939897909756
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.043685659766197205
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.0019105863963204683,
+          0.0034196441910353307
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.0026607058352965396
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.00012075923374368358,
+          0.0002034781535598995
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.00016102559607134026
+      },
+      "lag_32_127": {
+        "ci95": [
+          4.659570594327534e-05,
+          6.24840923833858e-05
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 5.407602321838567e-05
+      }
+    },
+    "absolute_delta_nll": {
+      "lag_0_0": {
+        "ci95": [
+          0.6163441607786808,
+          1.3252940704551286
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.9741667242487893
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.10826952173374593,
+          0.1990682314004516
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.14829143983661197
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.040534343823674136,
+          0.04794295784085989
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.04427996452432126
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.026598641397140455,
+          0.029829499410698186
+        ],
+        "documents": 32,
+        "bootstrap_units": 8,
+        "bootstrap_block_size": 4,
+        "inference_valid": true,
+        "mean": 0.02831062173936516
+      }
+    }
+  },
+  "reset_once_clean_kv": {
+    "kl_normal_to_intervention": {
+      "lag_0_0": {
+        "ci95": [
+          0.3064986047262209,
+          0.8684141652163816
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.5466153590823524
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.003581789444183414,
+          0.00922029537889557
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.006174888611894858
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.00033798342564068663,
+          0.00039962832928495116
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.0003668049694169895
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.0003566761290130671,
+          0.0003971170664499368
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.00037627491747116437
+      }
+    },
+    "state_relative_l2": {
+      "lag_0_0": {
+        "ci95": [
+          0.35836178630124776,
+          0.40638610436581074
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.381580269895494
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.023597667120338884,
+          0.029630968217679764
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.026479323103558272
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.005700790052651427,
+          0.0060829670583189
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.005878984564333223
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.005664295968381338,
+          0.005910114120342769
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.005785071800346486
+      }
+    },
+    "state_cosine_distance": {
+      "lag_0_0": {
+        "ci95": [
+          0.04194146986119449,
+          0.057011982379481185
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.04906819760799408
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.0006996306417249798,
+          0.0012328588476520962
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.0009491379805695033
+      },
+      "lag_8_31": {
+        "ci95": [
+          1.5229677499917215e-05,
+          1.7380254602983312e-05
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 1.6256856440577394e-05
+      },
+      "lag_32_127": {
+        "ci95": [
+          1.5163380317062547e-05,
+          1.6541285677362794e-05
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 1.5837198503731997e-05
+      }
+    },
+    "absolute_delta_nll": {
+      "lag_0_0": {
+        "ci95": [
+          0.5169180847587995,
+          1.2241994766751305
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.8528445518459193
+      },
+      "lag_1_7": {
+        "ci95": [
+          0.03483060418584501,
+          0.08911408125495654
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.05818523751804605
+      },
+      "lag_8_31": {
+        "ci95": [
+          0.016553432699583936,
+          0.01910407522445894
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.017788831988582388
+      },
+      "lag_32_127": {
+        "ci95": [
+          0.016944975400110706,
+          0.018887511573848315
+        ],
+        "documents": 32,
+        "bootstrap_units": 32,
+        "bootstrap_block_size": 1,
+        "inference_valid": true,
+        "mean": 0.017894415883347392
+      }
+    }
+  }
+}

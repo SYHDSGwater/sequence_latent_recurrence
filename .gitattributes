@@ -1,0 +1,4 @@
+experiments/t2mlr/*.py text eol=lf
+experiments/t2mlr/*.sh text eol=lf
+*.tar.gz binary
+*.png binary

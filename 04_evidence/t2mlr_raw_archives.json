@@ -1,0 +1,22 @@
+{
+  "primary-results.tar.gz": {
+    "bytes": 3128279,
+    "sha256": "db15d7246cb3ac116c36351157c9d2f285f9f3d3a729b9c3a5693ac4584e75e0",
+    "files": 6
+  },
+  "confirmation-results.tar.gz": {
+    "bytes": 1434059,
+    "sha256": "8a672e3ed745972553fcd80e06eda0cbdab3d20757ccbecd2c1c7674cf2ee462",
+    "files": 4
+  },
+  "diagnostics-results.tar.gz": {
+    "bytes": 1781963,
+    "sha256": "3432d7e5e73df2e1e016e225e097c4d8a3e1cfd0e3fbb079cadb3db16149ee44",
+    "files": 7
+  },
+  "expanded-results.tar.gz": {
+    "bytes": 9232582,
+    "sha256": "0dfd13399c146e882ec39ddf03c3a2a640c2a245f1208ecf4243309b23988fa2",
+    "files": 56
+  }
+}

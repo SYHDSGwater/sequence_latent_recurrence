@@ -1,0 +1,30 @@
+claim_id: C-T2-EXPANDED
+status: complete_independently_verified
+scope: 两个冻结公开 checkpoint；256 篇 WikiText 文章和 256 道 MATH-500 参考解答；完整 KV、teacher forcing、BF16 exact inference。
+claims:
+  - claim: 旧状态加法累积具有小幅平均预测收益。
+    evidence: 四组 carry_off Delta NLL 为 0.01950、0.03165、0.02041、0.02451；95% CI 均大于零。
+    strength: cross_checkpoint_and_input_distribution_consistency
+    caveat: 不等于持续推理；持续干预同时改变题目编码和解答阶段。
+  - claim: 单次清零的远期平均预测代价小。
+    evidence: 四组自然与四组 clean-KV lag 32–127 的 CI 均在预注册 ±0.01 nat/token 内。
+    strength: predefined_practical_small_effect_criterion_met
+    caveat: 数学远期仅 169 道足够长解答；有符号均值含正负抵消。
+  - claim: 远期逐 token 预测差异没有完全消失。
+    evidence: 自然路径远期平均绝对 Delta NLL 为 0.02723–0.03904；clean-KV 为 0.01625–0.02032。
+    strength: nonnegative_metric_consistent
+    caveat: 未测 FP32 对照、KL 或语义信息；不得把差值解释成 KV 贡献百分比。
+  - claim: 更强的反馈依赖不意味着更大的累积收益。
+    evidence: 982M 每步清零代价明显更大；Wiki carry_off 跨模型配对差 CI 跨零，Math 的 982M 代价反而较小。
+    strength: descriptive_cross_checkpoint_comparison
+    caveat: 参数量、训练 token 数和循环层跨度混杂；点态 CI 未校正多重比较。
+not_established:
+  - 自由生成数学题的准确率或中间推理正确性。
+  - 内容特异、不可被 attention 历史重建的持续推理状态。
+  - T2MLR 相对训练匹配 Transformer 或 RLT 的架构优势。
+  - 1.7B retrofit 的有效性与论文 benchmark 复现。
+sources:
+  - 03_experiments/t2mlr_expanded_preregistration.md
+  - 04_evidence/t2mlr_expanded_data_provenance.json
+  - 04_evidence/t2mlr_expanded_results.json
+  - 06_reports/t2mlr_expanded_results.md

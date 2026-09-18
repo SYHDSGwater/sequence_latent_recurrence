@@ -1,0 +1,21 @@
+{
+  "complete_batches_each": 8,
+  "disjoint_primary_confirmation_titles": true,
+  "primary_confirmation_code_hashes_equal": true,
+  "diagnostics_match_primary_document_ids": true,
+  "diagnostic_trace_rows": 49152,
+  "diagnostic_prefix_max_kl": 0.0,
+  "diagnostic_prefix_max_absolute_delta_nll": 0.0,
+  "supplement_vs_primary_max_absolute_nll_difference": 5.960464477539063e-08,
+  "files": {
+    "artifacts\\5090\\artifacts\\primary\\manifest.json": "36c592e7453fc6759127c5f9c5c85fb0c73dc167e1f543c79110a0e27f3c1f39",
+    "artifacts\\5090\\artifacts\\primary\\summary.json": "6730d9486c4914369a3566443902bfffba76a36d2986b0a223963b5b6cbb7598",
+    "artifacts\\5090\\artifacts\\primary\\token_traces.jsonl": "08482423f078685380213d816249a940c6267ff90b4aed64bb3c8f9d64f2a662",
+    "artifacts\\5090\\artifacts\\confirmation\\manifest.json": "b2f451760d85d0cf1680120965f934886da4260eff55a5929f93e07cf1b5bd88",
+    "artifacts\\5090\\artifacts\\confirmation\\summary.json": "a43c2db6f6ddcd87b34a40c4f44ccfdd5da775bc13d66bd368ea870c6e662e3c",
+    "artifacts\\5090\\artifacts\\confirmation\\token_traces.jsonl": "54a24bd23885266fb86a3f5af89e0adcfd5d9bda5ce13760f1dc0728bb3f94f1",
+    "artifacts\\5090\\artifacts\\diagnostics\\manifest.json": "19e30a6793679e6c514ab97fe9424c84ba0aa3829779b1d779f55343037b3322",
+    "artifacts\\5090\\artifacts\\diagnostics\\summary.json": "d92a198456d8e4fe051b8cb95c3e3abd0a8ac7e2267909f0b9b354e16f4349af",
+    "artifacts\\5090\\artifacts\\diagnostics\\traces.jsonl": "b4c0610fb0fe614c952d1038ea36cb9fa129fb8f15f8d2d5e9fe6814b3f6fd52"
+  }
+}

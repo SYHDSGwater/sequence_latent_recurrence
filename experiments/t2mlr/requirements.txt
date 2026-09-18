@@ -1,0 +1,9 @@
+# Install a CUDA-enabled torch separately on the H100 host.
+transformers==4.56.2
+huggingface_hub>=0.34,<1
+safetensors>=0.4
+numpy>=1.26
+pytest>=8
+pyarrow>=14
+matplotlib>=3.8
+requests>=2.31

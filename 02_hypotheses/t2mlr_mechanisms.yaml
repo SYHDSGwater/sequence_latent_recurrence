@@ -1,0 +1,46 @@
+hypotheses:
+  - hypothesis_id: H-T2-LOCAL
+    status: tested_consistent_with_qualifications
+    mechanism_cluster: local_feature_reuse
+    claim: 状态主要提供邻近 token 特征，任务相关影响在短时间内恢复。
+    mechanism: 新 token 与 attention 历史快速重建有用的中层表示。
+    assumptions: [精确推理正确, 文档和干预时刻预先固定]
+    unique_prediction: 单次清零在 lag 0-7 有效，但 clean-KV 条件 lag 32-127 平均损失差接近零。
+    falsifier: clean-KV 下仍存在稳定的远期损失增加，且跨文档 donor 比真实状态更差。
+    confounders: [attention 可补偿状态信息, 清零分布偏移]
+    null_explanation: 状态只提供幅度校准而非内容。
+    minimal_test: {description: 单次 reset 与同幅度 donor 配对, separates: [H-T2-PERSIST, H-T2-KV], estimated_gpu_hours: 1.5}
+    expected_information_gain: high
+    provenance: {generated_by: Codex, literature_refs: [T2MLR-2026], created_at: '2026-09-18'}
+    belief: {prior: null, current: null}
+    notes: 原两组各 32 文档后，扩大至两个 checkpoint 各 256 文本和 256 数学参考解答；所有自然和 clean-KV 远期平均 NLL CI 均在预定义小效应区间。数学远期 n=169。与局部复用或可重建状态相容，不能等同于状态信息消失。见 C-T2-5090 和 C-T2-EXPANDED。
+  - hypothesis_id: H-T2-PERSIST
+    status: tested_mixed
+    mechanism_cluster: persistent_accumulation
+    claim: 跨步加法累积携带持续且有益的内容特异信息。
+    mechanism: l_end 输出与上一状态相加后归一化，再反馈至下一 token 的 l_start。
+    assumptions: [干预的分布偏移不能完全解释效应]
+    unique_prediction: carry_off 增加 NLL，donor 有害，clean-KV reset 远期效应仍存在。
+    falsifier: 三项主终点均落入预注册等效区间。
+    confounders: [累积消融改变状态分布, 持续信息不等于多步推理]
+    null_explanation: recurrent 路径依赖或一般语言建模记忆。
+    minimal_test: {description: 保留归一化的 carry_off 加单次 reset 恢复曲线, separates: [H-T2-LOCAL], estimated_gpu_hours: 1.0}
+    expected_information_gain: high
+    provenance: {generated_by: Codex, literature_refs: [T2MLR-2026], created_at: '2026-09-18'}
+    belief: {prior: null, current: null}
+    notes: carry_off 小幅损失扩展到 135M/10B 与 982M/50B 的文本/数学四组均存在；强的持续推理解释仍缺语义干预或自由生成证据。累积有贡献与持续推理应分开。见 C-T2-5090 和 C-T2-EXPANDED。
+  - hypothesis_id: H-T2-KV
+    status: tested_unresolved
+    mechanism_cluster: attention_mediated_propagation
+    claim: 单次状态扰动的长尾主要通过后续 KV 历史传播。
+    mechanism: 状态改变本 token hidden/KV，后续 attention 重用被改变的历史。
+    assumptions: [clean-KV 是人工路径阻断诊断而非正常模型执行]
+    unique_prediction: 自然 rollout 长尾存在，但每步用正常历史 KV 的 rollout 长尾显著缩短。
+    falsifier: clean-KV 下仍保留相近且非零的远期效应。
+    confounders: [两条通路存在非线性交互, 不能把效应相减解释为可加贡献百分比]
+    null_explanation: 分支 cache 别名污染制造假差异。
+    minimal_test: {description: 自然和 clean-KV 单次 reset 比较, separates: [H-T2-PERSIST], estimated_gpu_hours: 1.0}
+    expected_information_gain: high
+    provenance: {generated_by: Codex, literature_refs: [T2MLR-2026], created_at: '2026-09-18'}
+    belief: {prior: null, current: null}
+    notes: 扩大四组后，自然与 clean-KV 远期平均代价仍小，clean-KV 的远期绝对 NLL 差描述性地更小；与 KV 参与传播相容，但非线性交互和小平均效应仍阻止主导性归因。见 C-T2-EXPANDED。

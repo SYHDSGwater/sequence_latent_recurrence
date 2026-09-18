@@ -1,0 +1,16 @@
+claim_id: C-T2-IMPLEMENTATION
+status: validated_on_tiny_cpu_and_full_bf16_gpu
+claim: 最小适配器在已测试语义下对齐当前官方单步实现，完整 checkpoint tensor 名称和形状相容。
+evidence:
+  - source: experiments/t2mlr/test_mechanism.py
+    observation: 四项 CPU 测试通过，包括逐步 logits/state 的零容差对照。
+    environment: Windows Python 3.12, torch 2.6.0+cpu, transformers 4.56.2
+  - source: 04_evidence/t2mlr_shape_audit.json
+    observation: 298 个 tensor 的键名和形状无不匹配；仅读取 safetensors header。
+  - source: 04_evidence/t2mlr_5090_gpu_validation.json
+    observation: 完整权重严格加载；tied embedding/head 相等；2 条 8-token 序列上 BF16 logits/state 与当前官方单步函数差异均为 0。
+    environment: RTX 5090 D 32GB, torch 2.8.0+cu128, transformers 4.56.2
+limitations:
+  - GPU 对照覆盖短序列，不能保证所有输入与精度后端完全一致。
+  - 与当前公开实现对齐不证明该实现等同论文实验版本。
+  - 本记录只验证实现；机制结论另见实测报告。
