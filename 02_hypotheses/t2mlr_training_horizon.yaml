@@ -1,0 +1,64 @@
+hypothesis_id: H-T2-JACOBI-CONTRACTION
+status: proposed
+mechanism_cluster: training_induced_temporal_horizon
+
+claim: >-
+  T²MLR 当前公开 checkpoint 中“局部有用、单次扰动快速恢复、远期 signed effect 很小”的 recurrent dynamics，
+  可能并非 sequence-axis recurrence 架构本身的固有性质，而是 temporal-parallel Jacobi approximation
+  与短 recurrent gradient horizon 共同塑造的训练结果。
+
+mechanism: >-
+  主训练使用有限 Jacobi forward refinement 与短 recurrent backprop horizon。优化器持续收到的直接
+  credit assignment 主要来自短程 recurrence，因此最容易学到局部 deep-to-shallow feature reuse
+  和快速 mixing/contractive dynamics；更长程的信息需求可由 attention/KV shortcut 重建，
+  进一步降低模型维持 persistent latent state 的训练激励。
+
+assumptions:
+  - 现有 frozen-checkpoint intervention 的快速恢复不是实现错误或数值伪影
+  - recurrent forward/backward horizon 确实限制优化器直接看到的 temporal credit
+  - 小规模 controlled training 能至少定性复现 temporal-horizon dynamics
+
+unique_predictions:
+  - "同架构/数据/初始化/token budget 下，增加 recurrent backward horizon 应提高 persistence horizon"
+  - "固定短 backward horizon 时，exact sequential vs Jacobi 可识别 forward approximation 的贡献"
+  - "若 persistence 增强但 LM utility 不增强，则 persistent state 不等于 useful latent reasoning"
+  - "六个公开 checkpoint 若恢复尺度相近，则与共同 training recipe 限制 horizon 相容"
+
+falsifiers:
+  - "backward horizon 从 4 提高到 16/32/long 后，多 seed persistence 基本不变"
+  - "exact sequential + long/full BPTT 仍与 (16,4) Jacobi 一样快速恢复且远期 utility 近零"
+  - "观察到 persistence 主要由 architecture/data/attention path 而非 temporal training horizon 决定"
+
+confounders:
+  - attention/KV 可在 state 扰动后重建中层表示
+  - 更长 BPTT 同时改变 optimization difficulty 与 gradient statistics
+  - 不同 scale 的 recurrent layer span/capacity/training tokens 混杂
+  - zero reset 是 OOD intervention，需 small perturbation 复核
+  - long persistence 可能是无用 memory 或慢 mixing
+
+null_explanations:
+  - architecture_locality: middle-layer feedback 本质只适合短程 feature reuse
+  - attention_reconstruction: attention/KV shortcut 使 persistent state 缺乏边际价值
+  - dynamical_stability: 快速 contraction 是稳定训练的自然解，而非 Jacobi/TBPTT 副作用
+
+minimal_tests:
+  - "Frozen checkpoint matrix：135M/362M/982M × 10B/50B，估计 impulse-response AUC 与 recovery half-life"
+  - "Causal grid：Jacobi(16,4)、Jacobi(16,16)、exact-sequential+TBPTT4、exact-sequential+long-BPTT"
+
+provenance:
+  generated_from:
+    - 04_evidence/t2mlr_5090_claims.yaml
+    - 04_evidence/t2mlr_expanded_claims.yaml
+  created_at: "2026-09-18"
+  created_by: "ChatGPT + user discussion"
+
+belief:
+  prior: moderate
+  current: moderate
+  update_rule: >-
+    只有 controlled training 中 temporal horizon 对 persistence 的因果影响才提升到 strong；
+    frozen-checkpoint cross-scale pattern 仅作相关性证据。
+
+notes: >-
+  不把“Jacobi forward approximation”与“short recurrent credit horizon”混为一谈；
+  两者必须通过 matched contrasts 分开识别。
